@@ -1,1 +1,13 @@
-The Zombie library is intended to be used with the QuickBoooks SDK and, specifically, the QBFC library from Intuit.
+The Zombie library is intended to be used with the QuickBooks SDK and, specifically, the QBFC library from Intuit. See the project wiki for full information.
+
+In order to build Zombie, you'll need Visual Studio 2010 and version 11 of the QuickBooks SDK (actually, you only need QBFC, but why not get the whole SDK?). To get the SDK, 
+
+	1) Go to http://developer.intuit.com
+
+	2) Click on the "QuickBooks SDK" link at the top of the page (unless they've moved it again)
+
+	3) Sign-up for the Intuit Developer Network
+
+	4) Download the SDK
+
+Note: you will need either QuickBooks desktop or QuickBooks Online Edition to do anything interesting with Zombie. See the Intuit Developer site for details on how to get copies and/or online companies for test purposes.
