@@ -18,41 +18,63 @@ namespace ZombieDemo
     {
         static void Main(string[] args)
         {
+            var menuItems = new string[][]
+            {
+                new string[] {"1", "Customer List (Read Only)"},
+                new string[] {"2", "Customer Update (NOT Read Only)"},
+                new string[] {"Q", "Quit"}
+            };
+
             try
             {
                 ConnectionMgr.InitDesktop("Zombie demonstration console application");
 
+                //the StatusConsole class will direct all error and trace information to the console
                 StatusMgr.AddListener(new StatusConsole(), true);
 
-                using (var cn = ConnectionMgr.GetConnection())
+                Console.WriteLine("\r\nThis application demonstrates the capabilities of the Zombie Library\r\n");
+                
+                char c;
+
+                do
                 {
-                    Console.WriteLine("Company file open");
+                    Console.WriteLine("Please select a demonstration:");
 
-                    var batch = cn.NewBatch();
-
-                    var qryCust = batch.MsgSet.AppendCustomerQueryRq();
-
-                    batch.SetClosures(qryCust, b =>
+                    foreach (var item in menuItems)
                     {
-                        var customers = new QBFCIterator<ICustomerRetList, ICustomerRet>(b);
+                        Console.WriteLine("\r\n\t{0}:\t{1}", item[0], item[1]);
+                    }
 
-                        foreach (var customer in customers)
+                    c = Console.ReadKey(true).KeyChar;
+
+                    Console.WriteLine("\r\nOption {0} selected...", c);
+
+                    try
+                    {
+                        switch (c)
                         {
-                            Console.WriteLine(Safe.Value(customer.FullName));
-                        }
-                    }); 
+                            case '1':
+                                CustomerList.Show();
+                                break;
 
-                    batch.Run();                    
+                            case '2':
+                                CustomerUpdate.Run();
+                                break;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        StatusMgr.HandleException(string.Format("Demonstration item {0}", c), ex);
+                    }
                 }
+                while (c != 'q' && c != 'Q');
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
 
-            Console.WriteLine("Press any key to exit");
-
-            Console.ReadKey();
+            Console.WriteLine("Thank you for trying Zombie!");
         }
     }
 }
