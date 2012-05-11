@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zombie", "Zombie\Zombie.csp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0B0E3669-FB5D-426E-AEC8-F42E5295BA2E}"
 	ProjectSection(SolutionItems) = preProject
-		COPYRIGHT.txt = COPYRIGHT.txt
+		COPYRIGHT = COPYRIGHT
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZombieDemo", "ZombieDemo\ZombieDemo.csproj", "{4F423B7E-0D85-4D66-B61C-3B4F45989E7B}"
