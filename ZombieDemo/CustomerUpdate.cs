@@ -9,10 +9,22 @@ namespace ZombieDemo
 {
     class CustomerUpdate
     {
-        public static bool Run()
+        public static void Run()
         {
             using (var cn = ConnectionMgr.GetConnection())
             {
+                Console.WriteLine("WARNING: this demonstration will change the name of every customer in your company file. Are you sure you want to do this? (y/n)");
+
+                switch (Console.ReadKey().KeyChar)
+                {
+                    case 'y':
+                    case 'Y':
+                        break;
+
+                    default:
+                        return;
+                }
+
                 var queryBatch = cn.NewBatch();
 
                 var updateBatch = cn.NewBatch();
@@ -42,10 +54,10 @@ namespace ZombieDemo
                     });
 
                 StatusMgr.Trace("Running query for all edit sequences");
-                if (!queryBatch.Run()) return false;
+                if (!queryBatch.Run()) return;
 
                 StatusMgr.Trace("Updating all customers");
-                return updateBatch.Run();
+                updateBatch.Run();
             }
         }
 

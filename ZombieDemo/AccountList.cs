@@ -21,6 +21,8 @@ namespace ZombieDemo
     {
         public static void Show()
         {
+            Console.WriteLine("Chart of Accounts from the current company file");
+
             using (var cn = ConnectionMgr.GetConnection())
             {
                 var batch = cn.NewBatch();

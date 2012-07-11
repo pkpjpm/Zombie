@@ -23,7 +23,7 @@ namespace ZombieDemo
         {
             using (var cn = ConnectionMgr.GetConnection())
             {
-                Console.WriteLine("Company file open");
+                Console.WriteLine("Customer list from the current company file");
 
                 var batch = cn.NewBatch();
 

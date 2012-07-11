@@ -39,7 +39,8 @@ namespace ZombieDemo
 
                 do
                 {
-                    Console.WriteLine("Please select a demonstration:");
+                    Console.WriteLine("\r\n=====================================================\r\n");
+                    Console.WriteLine("  Please select a demonstration:");
 
                     foreach (var item in menuItems)
                     {
@@ -78,9 +79,6 @@ namespace ZombieDemo
                 Console.WriteLine(ex.Message);
             }
 
-            Console.WriteLine("Press any key to exit");
-
-            Console.ReadKey();
             Console.WriteLine("Thank you for trying Zombie!");
         }
     }
