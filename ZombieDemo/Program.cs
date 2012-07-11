@@ -18,51 +18,60 @@ namespace ZombieDemo
     {
         static void Main(string[] args)
         {
+            var menuItems = new string[][]
+            {
+                new string[] {"1", "Customer List (Read Only)"},
+                new string[] {"2", "Customer Update (NOT Read Only)"},
+                new string[] {"3", "Account List (Read Only)"},
+                new string[] {"Q", "Quit"}
+            };
+
             try
             {
                 ConnectionMgr.InitDesktop("Zombie demonstration console application");
 
+                //the StatusConsole class will direct all error and trace information to the console
                 StatusMgr.AddListener(new StatusConsole(), true);
 
-                //AccountExample();
+                Console.WriteLine("\r\nThis application demonstrates the capabilities of the Zombie Library\r\n");
 
-                InventoryUpdateTest();
+                char c;
 
-                //InventoryQuery();
+                do
+                {
+                    Console.WriteLine("Please select a demonstration:");
 
-                //using (var cn = ConnectionMgr.GetConnection())
-                //{
-                //    var batch = cn.NewBatch();
+                    foreach (var item in menuItems)
+                    {
+                        Console.WriteLine("\r\n\t{0}:\t{1}", item[0], item[1]);
+                    }
 
-                //    var qry = batch.MsgSet.AppendSalesOrderAddRq();
+                    c = Console.ReadKey().KeyChar;
 
-                //    var line = qry.ORSalesOrderLineAddList.Append();
+                    switch (c)
+                    {
+                        case '1':
+                            CustomerList.Show();
+                            break;
 
-                //    line.SalesOrderLineAdd.Desc.SetValue("Is it A & B or A &amp; B");
+                        case '2':
+                            CustomerUpdate.Run();
+                            break;
 
-                //    Console.WriteLine(batch.MsgSet.ToXMLString());
-                //}
+                        case '3':
+                            AccountList.Show();
+                            break;
 
-                //using (var cn = ConnectionMgr.GetConnection())
-                //{
-                //    Console.WriteLine("Company file open");
+                        case 'Q':
+                        case 'q':
+                            break;
 
-                //    var batch = cn.NewBatch();
-
-                //    var qryCust = batch.MsgSet.AppendCustomerQueryRq();
-
-                //    batch.SetClosures(qryCust, b =>
-                //    {
-                //        var customers = new QBFCIterator<ICustomerRetList, ICustomerRet>(b);
-
-                //        foreach (var customer in customers)
-                //        {
-                //            Console.WriteLine(Safe.Value(customer.FullName));
-                //        }
-                //    }); 
-
-                //    batch.Run();                    
-                //}
+                        default:
+                            Console.WriteLine("unrecognized key: {0}", c);
+                            break;
+                    }
+                }
+                while (c != 'q' && c != 'Q');
             }
             catch (Exception ex)
             {
@@ -72,123 +81,7 @@ namespace ZombieDemo
             Console.WriteLine("Press any key to exit");
 
             Console.ReadKey();
-        }
-
-        static void AccountExample()
-        {
-            using (var cn = ConnectionMgr.GetConnection())
-            {
-                var batch = cn.NewBatch();
-
-                var qry = batch.MsgSet.AppendAccountQueryRq();
-
-                batch.SetClosures(qry, b =>
-                    {
-                        var accounts = new QBFCIterator<IAccountRetList, IAccountRet>(b);
-
-                        foreach (var account in accounts)
-                        {
-                            Console.WriteLine(" Account name:{0}, type {1}", Safe.Value(account.Name), account.AccountType.GetAsString());
-                        }
-                    });
-
-                batch.Run();
-               
-            }
-        }
-
-        static void InventoryQuery()
-        {
-            using (var cn = ConnectionMgr.GetConnection())
-            {
-                var batch = cn.NewBatch();
-
-                var qry = batch.MsgSet.AppendInventoryAdjustmentQueryRq();
-
-                var filter = qry.ORInventoryAdjustmentQuery.TxnFilterWithItemFilter.ORDateRangeFilter.TxnDateRangeFilter.ORTxnDateRangeFilter.TxnDateFilter;
-
-                filter.FromTxnDate.SetValue(DateTime.Parse("5/1/2012"));
-                filter.ToTxnDate.SetValue(DateTime.Parse("5/31/2012"));
-
-                qry.IncludeLineItems.SetValue(true);
-
-                batch.SetClosures(qry, b =>
-                    {
-                        var adjustments = new QBFCIterator<IInventoryAdjustmentRetList, IInventoryAdjustmentRet>(b);
-
-                        foreach(var adjustment in adjustments)
-                        {
-                            Console.WriteLine(Safe.Value(adjustment.TxnDate));
-                            
-                            var lines = new QBFCIterator<IInventoryAdjustmentLineRetList, IInventoryAdjustmentLineRet>(adjustment.InventoryAdjustmentLineRetList);
-
-                            foreach(var line in lines)
-                            {
-                                string lot = "none";
-
-                                if(line.ORSerialLotNumberPreference != null)
-                                {
-                                    lot = Safe.Value(line.ORSerialLotNumberPreference.LotNumber);
-
-                                    if (line.ORSerialLotNumberPreference.SerialNumberRet != null)
-                                    {
-                                        Console.WriteLine("serial number ret");
-
-                                        if (line.ORSerialLotNumberPreference.SerialNumberRet.SerialNumberAddedOrRemoved != null)
-                                        {
-                                            Console.WriteLine(line.ORSerialLotNumberPreference.SerialNumberRet.SerialNumberAddedOrRemoved.GetValue());
-                                        }
-                                    }
-
-                                }
-
-                                Console.WriteLine("{0} lot:{1} quantity:{2} value:{3}", new object[]
-                                    {
-                                        Safe.FullName(line.ItemRef), lot, Safe.Value(line.QuantityDifference), Safe.Value(line.ValueDifference)
-                                    });
-
-                            }
-                        }
-                    });
-
-                batch.Run();
-            }
-        }
-
-        static void InventoryUpdateTest()
-        { 
-            using (var cn = ConnectionMgr.GetConnection())
-            {
-                var batch = cn.NewBatch();
-
-                //var qry = batch.MsgSet.AppendInventoryAdjustmentAddRq();
-
-                var qry = batch.MsgSet.AppendInventoryAdjustmentModRq();
-
-                qry.AccountRef.FullName.SetValue("Material Costs");
-
-                //var line = qry.InventoryAdjustmentLineAddList.Append();
-
-                var line = qry.InventoryAdjustmentLineModList.Append();
-
-                line.ItemRef.FullName.SetValue("Acrylic Bowl");
-
-                //var lot = line.ORTypeAdjustment.LotNumberAdjustment;
-                //var lot = line.
-
-                //lot.LotNumber.SetValue("A666");
-                //lot.NewCount.SetValue(12);
-
-                //string badXml = batch.MsgSet.ToXMLString();
-
-                //string goodXml = badXml.Replace("NewCount", "CountAdjustment");
-
-                Console.WriteLine(batch.MsgSet.ToXMLString());
-
-                //batch.Run();
-
-                StatusMgr.LogStatus("Complete");
-            }
+            Console.WriteLine("Thank you for trying Zombie!");
         }
     }
 }
