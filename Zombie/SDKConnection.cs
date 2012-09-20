@@ -168,7 +168,7 @@ namespace Zombie
                     continue;
                 }
 
-                if (dver > candidateVersion)
+                if (dver > candidateVersion && dver <= MAX_DESKTOP_QBXML_VERSION)
                 {
                     candidateVersion = dver;
                 }
