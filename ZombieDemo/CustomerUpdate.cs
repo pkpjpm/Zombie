@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Zombie;
-using Interop.QBFC11;
+using Interop.QBFC12;
 
 namespace ZombieDemo
 {

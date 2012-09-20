@@ -10,7 +10,7 @@
 
 using System;
 using System.Globalization;
-using SDK = Interop.QBFC11;
+using SDK = Interop.QBFC12;
 
 namespace Zombie
 {
@@ -21,7 +21,7 @@ namespace Zombie
     /// </summary>
     public class SDKConnection : IDisposable
     {
-        private const short MAX_DESKTOP_QBXML_VERSION = 11;
+        private const short MAX_DESKTOP_QBXML_VERSION = 12;
 
         //This is the QBXML version that will be used to find the QBXML version.
         private const short HOST_QUERY_QBXML_VERSION = 1;

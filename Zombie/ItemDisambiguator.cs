@@ -8,7 +8,7 @@
  *  full license available at http://opensource.org/licenses/EPL-1.0
  */
 
-using Interop.QBFC11;
+using Interop.QBFC12;
 
 namespace Zombie
 {

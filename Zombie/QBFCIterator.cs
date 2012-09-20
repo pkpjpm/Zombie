@@ -10,7 +10,7 @@
 
 using System;
 using System.Collections.Generic;
-using Interop.QBFC11;
+using Interop.QBFC12;
 
 namespace Zombie
 {
