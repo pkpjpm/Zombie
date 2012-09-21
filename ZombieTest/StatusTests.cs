@@ -13,16 +13,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
+using Zombie;
 
 namespace ZombieTest
 {
     [TestFixture]
     class StatusTests
     {
-        [Test]
-        public void QBErrorDelegateOverridesStatus()
+        public StatusTests()
         {
-            Assert.Fail();
+            StatusMgr.AddListener(new Zombie.StatusConsole(), true);
+        }
+
+        [Test]
+        public void BadErrorFormatWithSingleArgDoesNotThrowException()
+        {
+            StatusMgr.FormatError("This {0} is {1} wrong", 0);
         }
     }
 }
