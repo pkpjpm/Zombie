@@ -151,12 +151,30 @@ namespace Zombie
 
         public static void FormatError(string msg, object obj1)
         {
-            LogError(string.Format(msg, obj1));
+            try
+            {
+                LogError(string.Format(msg, obj1));
+            }
+            catch (FormatException)
+            {
+                FormatError("Format exception for single parameter:{0}", obj1);
+
+                LogError(msg);
+            }
         }
 
         public static void FormatError(string msg, object obj1, object obj2)
         {
-            LogError(string.Format(msg, obj1, obj2));
+            try
+            {
+                LogError(string.Format(msg, obj1, obj2));
+            }
+            catch (FormatException)
+            {
+                FormatError("Format exception for double parameters: {0} and {1}", obj1, obj2);
+
+                LogError(msg);
+            }
         }
 
         public static void FormatError(string msg, object[] objs)

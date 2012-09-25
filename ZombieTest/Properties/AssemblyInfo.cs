@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Zombie Demo")]
-[assembly: AssemblyDescription("Demonstration application for Zombie")]
+[assembly: AssemblyTitle("Zombie Test")]
+[assembly: AssemblyDescription("NUnit Test Frame for Zombie")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("PJPM")]
-[assembly: AssemblyProduct("ZombieDemo")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("ZombieTest")]
 [assembly: AssemblyCopyright("Copyright © PJPM 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("de3327a7-67a2-4d71-b457-9f66ac9941e1")]
+[assembly: Guid("6a22aec3-2da7-4f95-a387-77196090ed04")]
 
 // Version information for an assembly consists of the following four values:
 //
