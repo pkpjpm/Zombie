@@ -30,5 +30,11 @@ namespace ZombieTest
         {
             StatusMgr.FormatError("This {0} is {1} wrong", 0);
         }
+
+        [Test]
+        public void BadErrorFormatWithDoubleArgDoesNotThrowException()
+        {
+            StatusMgr.FormatError("This {0} is {1} really {2} wrong", 0, 0);
+        }
     }
 }
