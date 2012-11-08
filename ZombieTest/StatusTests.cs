@@ -36,5 +36,17 @@ namespace ZombieTest
         {
             StatusMgr.FormatError("This {0} is {1} really {2} wrong", 0, 0);
         }
+
+        [Test]
+        public void BadErrorFormatWithArrayArgDoesNotThrowException()
+        {
+            StatusMgr.FormatError("This {0} is {1} wrong {5} again", new object[] { 1, 2, 3 });
+        }
+
+        [Test]
+        public void BadWarningFormatWithSingleArgDoesNotThrowException()
+        {
+            StatusMgr.FormatWarning("This is wrong {1}", 0);
+        }
     }
 }

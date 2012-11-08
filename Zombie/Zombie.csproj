@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="ConnectionMgr.cs" />
     <Compile Include="CustomFieldGroup.cs" />
+    <Compile Include="DebugListener.cs" />
     <Compile Include="ItemDisambiguator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QBFCIterator.cs" />

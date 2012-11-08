@@ -179,8 +179,23 @@ namespace Zombie
 
         public static void FormatError(string msg, object[] objs)
         {
-            LogError(string.Format(msg, objs));
+            try
+            {
+                LogError(string.Format(msg, objs));
+            }
+            catch (FormatException)
+            {
+                LogError("Format exception for array parameter");
+
+                foreach (object obj in objs)
+                {
+                    FormatError("Parameter:{0}", obj);
+                }
+
+                LogError(msg);
+            }
         }
+
 
         public static void LogQBError(string context, string statusMessage, int statusCode)
         {
