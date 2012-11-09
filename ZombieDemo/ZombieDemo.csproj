@@ -36,7 +36,7 @@
   <ItemGroup>
     <Reference Include="Interop.QBFC11, Version=11.0.0.29, Culture=neutral, PublicKeyToken=31d8aec643e18259">
       <SpecificVersion>False</SpecificVersion>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
       <HintPath>..\..\..\..\Program Files (x86)\Common Files\Intuit\QuickBooks\Interop.QBFC11.dll</HintPath>
     </Reference>
     <Reference Include="System" />
