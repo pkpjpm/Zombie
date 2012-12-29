@@ -44,7 +44,12 @@ namespace Zombie
 
         private string _country;
 
-        private SDK.QBSessionManager _sessionMgr;
+        private SDK.IQBSessionManager _sessionMgr;
+
+        internal SDKConnection(SDK.IQBSessionManager sessionMgrMock)
+        {
+            _sessionMgr = sessionMgrMock;
+        }
 
         internal SDKConnection(ConnectionMgr.ApplicationIdentity appID, 
             ConnectionMgr.ConnectionConfig config)
@@ -75,6 +80,7 @@ namespace Zombie
 
             try
             {
+                //ToDo: use online session manager for online version
                 var sessionMgr = new SDK.QBSessionManager();
 
                 sessionMgr.OpenConnection2(appID.IntuitAppID, appID.Name, cnType);

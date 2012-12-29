@@ -10,6 +10,7 @@
 
 using System;
 using System.Collections.Generic;
+using SDK = Interop.QBFC11;
 
 namespace Zombie
 {
@@ -178,6 +179,11 @@ namespace Zombie
                     _connections[0].Close();
                 }
             }
+        }
+
+        public static object GetTestConnection(SDK.IQBSessionManager sessionMgr)
+        {
+            return new SDKConnection(sessionMgr);
         }
     }
 }

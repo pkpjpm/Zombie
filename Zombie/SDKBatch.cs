@@ -22,7 +22,7 @@ namespace Zombie
     public class SDKBatch
     {
         private SDK.IMsgSetRequest _msg;
-        private SDK.QBSessionManager _mgr;
+        private SDK.IQBSessionManager _mgr;
         private Dictionary<int, ClosureSpec> _clousures;
         private IteratorSetup _iterator;
 
@@ -46,7 +46,7 @@ namespace Zombie
 
         public SDK.IMsgSetRequest MsgSet { get { return _msg; } }
  
-        internal SDKBatch(SDK.QBSessionManager mgr, short majorVer, short minorVer, string Country)
+        internal SDKBatch(SDK.IQBSessionManager mgr, short majorVer, short minorVer, string Country)
         {
             _clousures = new Dictionary<int, ClosureSpec>();
             _mgr = mgr;
