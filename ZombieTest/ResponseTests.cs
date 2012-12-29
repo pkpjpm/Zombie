@@ -14,6 +14,9 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using Zombie;
+using Moq;
+using Interop.QBFC11;
+using ZombieTest.Support;
 
 namespace ZombieTest
 {
@@ -28,8 +31,31 @@ namespace ZombieTest
         [Test]
         public void QueryForItemsWithOneMissingSucceeds()
         {
-            using (var cn = ConnectionMgr.GetTestConnection())
+            var msgMock = new Mock<IMsgSetRequest>();
+
+            var queryMock = new Mock<ICustomerQuery>();
+
+            msgMock.Setup(x => x.AppendCustomerQueryRq()).Returns(queryMock.Object);
+
+            var sessionFake = new SessionFake(msgMock.Object);
+
+            using (var cn = ConnectionMgr.GetTestConnection(sessionFake))
             {
+                var batch = cn.NewBatch();
+
+                var query = batch.MsgSet.AppendCustomerAddRq();
+
+                batch.SetClosures(query, b =>
+                    {
+                        var customers = new QBFCIterator<ICustomerRetList, ICustomerRet>(b);
+
+                        foreach(var customer in customers)
+                        {
+                            Console.WriteLine(Safe.Value(customer.Name));
+                        }
+                    }, null, true);
+
+                Assert.AreEqual(true, batch.Run());
             }
         }
     }
