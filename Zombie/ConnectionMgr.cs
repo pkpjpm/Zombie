@@ -181,7 +181,7 @@ namespace Zombie
             }
         }
 
-        public static object GetTestConnection(SDK.IQBSessionManager sessionMgr)
+        public static SDKConnection GetTestConnection(SDK.IQBSessionManager sessionMgr)
         {
             return new SDKConnection(sessionMgr);
         }
