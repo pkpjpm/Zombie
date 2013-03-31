@@ -23,6 +23,7 @@ namespace ZombieDemo
                 new string[] {"1", "Customer List (Read Only)"},
                 new string[] {"2", "Customer Update (NOT Read Only)"},
                 new string[] {"3", "Account List (Read Only)"},
+                new string[] {"4", "Serial Number Report"},
                 new string[] {"Q", "Quit"}
             };
 
@@ -61,6 +62,10 @@ namespace ZombieDemo
 
                         case '3':
                             AccountList.Show();
+                            break;
+
+                        case '4':
+                            SerialNumberReport.Run();
                             break;
 
                         case 'Q':
