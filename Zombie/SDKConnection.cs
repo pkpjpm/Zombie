@@ -10,7 +10,7 @@
 
 using System;
 using System.Globalization;
-using SDK = Interop.QBFC11;
+using SDK = Interop.QBFC12;
 
 namespace Zombie
 {

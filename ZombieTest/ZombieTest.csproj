@@ -49,10 +49,10 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Interop.QBFC11, Version=12.0.0.29, Culture=neutral, PublicKeyToken=31d8aec643e18259">
+    <Reference Include="Interop.QBFC12, Version=12.0.0.29, Culture=neutral, PublicKeyToken=31d8aec643e18259">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>..\..\..\Program Files (x86)\Common Files\Intuit\QuickBooks\Interop.QBFC11.dll</HintPath>
+      <HintPath>..\..\..\Program Files (x86)\Common Files\Intuit\QuickBooks\Interop.QBFC12.dll</HintPath>
     </Reference>
     <Reference Include="Moq, Version=4.0.10827.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
@@ -72,8 +72,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResponseTests.cs" />
     <Compile Include="StatusTests.cs" />
-    <Compile Include="Support\MsgSetFake.cs" />
-    <Compile Include="Support\SessionFake.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Zombie\Zombie.csproj">

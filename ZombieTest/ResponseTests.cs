@@ -15,8 +15,7 @@ using System.Text;
 using Xunit;
 using Zombie;
 using Moq;
-using Interop.QBFC11;
-using ZombieTest.Support;
+using Interop.QBFC12;
 
 namespace ZombieTest
 {
@@ -53,6 +52,11 @@ namespace ZombieTest
             var customerNameMock = new Mock<IQBStringType>();
 
             sessionMock.Setup(x => x.CreateMsgSetRequest(It.IsAny<string>(), It.IsAny<short>(), It.IsAny<short>())).Returns(msgMock.Object);
+
+            //for somre reason we have to explicitly setup these no-op methods on the mock
+            //This only became necessary after the upgrade to QBSDK12
+            sessionMock.Setup(x => x.EndSession());
+            sessionMock.Setup(x => x.CloseConnection());
 
             msgMock.Setup(x => x.AppendCustomerQueryRq()).Returns(queryMock.Object);
 
