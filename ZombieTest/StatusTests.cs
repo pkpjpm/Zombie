@@ -12,38 +12,37 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NUnit.Framework;
+using Xunit;
 using Zombie;
 
 namespace ZombieTest
 {
-    [TestFixture]
-    class StatusTests
+    public class StatusTests
     {
         public StatusTests()
         {
             StatusMgr.AddListener(new Zombie.StatusConsole(), true);
         }
 
-        [Test]
+        [Fact]
         public void BadErrorFormatWithSingleArgDoesNotThrowException()
         {
             StatusMgr.FormatError("This {0} is {1} wrong", 0);
         }
 
-        [Test]
+        [Fact]
         public void BadErrorFormatWithDoubleArgDoesNotThrowException()
         {
             StatusMgr.FormatError("This {0} is {1} really {2} wrong", 0, 0);
         }
 
-        [Test]
+        [Fact]
         public void BadErrorFormatWithArrayArgDoesNotThrowException()
         {
             StatusMgr.FormatError("This {0} is {1} wrong {5} again", new object[] { 1, 2, 3 });
         }
 
-        [Test]
+        [Fact]
         public void BadWarningFormatWithSingleArgDoesNotThrowException()
         {
             StatusMgr.FormatWarning("This is wrong {1}", 0);

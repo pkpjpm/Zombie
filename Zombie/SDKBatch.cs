@@ -214,7 +214,7 @@ namespace Zombie
                     cls = _clousures[rqID];
                 }
 
-                if (itm.StatusCode == 0)
+                if (itm.StatusCode == 0 || itm.StatusCode == 500)
                 {
                     if (cls != null)
                     {
@@ -257,7 +257,7 @@ namespace Zombie
                     }
                 }
                 else if (cls != null && cls.allowEmptyReturn
-                            && (itm.StatusCode == 1 || itm.StatusCode == 500))
+                            && itm.StatusCode == 1)
                 {
                     //process empty result
                     try

@@ -151,15 +151,18 @@ namespace Zombie
 
         public static void FormatError(string msg, object obj1)
         {
+            LogError(FormatSingleParameter(msg, obj1));
+        }
+
+        private static string FormatSingleParameter(string msg, object obj1)
+        {
             try
             {
-                LogError(string.Format(msg, obj1));
+                return string.Format(msg, obj1);
             }
-            catch (FormatException)
+            catch(FormatException)
             {
-                FormatError("Format exception for single parameter:{0}", obj1);
-
-                LogError(msg);
+                return string.Format("Single parameter {0} for message {1}", obj1, msg);
             }
         }
 
@@ -224,7 +227,7 @@ namespace Zombie
 
         public static void FormatWarning(string msg, object obj1)
         {
-            LogWarning(string.Format(msg, obj1));
+            LogWarning(FormatSingleParameter(msg, obj1));
         }
 
         public static void FormatWarning(string msg, object obj1, object obj2)

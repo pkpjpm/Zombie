@@ -12,7 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NUnit.Framework;
+using Xunit;
 using Zombie;
 using Moq;
 using Interop.QBFC11;
@@ -20,30 +20,81 @@ using ZombieTest.Support;
 
 namespace ZombieTest
 {
-    [TestFixture]
-    class ResponseTests
+    public class ResponseTests
     {
         public ResponseTests()
         {
             StatusMgr.AddListener(new StatusConsole(), true);
         }
 
-        [Test]
+        [Fact]
         public void QueryForItemsWithOneMissingSucceeds()
         {
+            var sessionMock = new Mock<IQBSessionManager>();
+
             var msgMock = new Mock<IMsgSetRequest>();
 
             var queryMock = new Mock<ICustomerQuery>();
 
+            var requestListMock = new Mock<IRequestList>();
+
+            var requestMock = new Mock<IRequest>();
+
+            var responseSetMock = new Mock<IMsgSetResponse>();
+
+            var responseListMock = new Mock<IResponseList>();
+
+            var responseMock = new Mock<IResponse>();
+
+            var customerListMock = new Mock<ICustomerRetList>();
+
+            var customerMock = new Mock<ICustomerRet>();
+
+            var customerNameMock = new Mock<IQBStringType>();
+
+            sessionMock.Setup(x => x.CreateMsgSetRequest(It.IsAny<string>(), It.IsAny<short>(), It.IsAny<short>())).Returns(msgMock.Object);
+
             msgMock.Setup(x => x.AppendCustomerQueryRq()).Returns(queryMock.Object);
 
-            var sessionFake = new SessionFake(msgMock.Object);
+            msgMock.Setup(x => x.RequestList).Returns(requestListMock.Object);
 
-            using (var cn = ConnectionMgr.GetTestConnection(sessionFake))
+            requestListMock.Setup(x => x.Count).Returns(1);
+
+            requestListMock.Setup(x => x.GetAt(0)).Returns(requestMock.Object);
+
+            requestMock.Setup(x => x.Detail).Returns(queryMock.Object);
+
+            requestMock.Setup(x => x.RequestID).Returns(0);
+
+            sessionMock.Setup(x => x.DoRequests(msgMock.Object)).Returns(responseSetMock.Object);
+
+            responseSetMock.Setup(x => x.ResponseList).Returns(responseListMock.Object);
+
+            responseListMock.Setup(x => x.Count).Returns(1);
+
+            responseListMock.Setup(x => x.GetAt(0)).Returns(responseMock.Object);
+
+            responseMock.Setup(x => x.RequestID).Returns("0");
+
+            responseMock.Setup(x => x.StatusCode).Returns(500); //500 means some object found, but others not
+
+            responseMock.Setup(x => x.Detail).Returns(customerListMock.Object);
+
+            customerListMock.Setup(x => x.Count).Returns(1);
+
+            customerListMock.Setup(x => x.GetAt(0)).Returns(customerMock.Object);
+
+            customerMock.Setup(x => x.Name).Returns(customerNameMock.Object);
+
+            customerNameMock.Setup(x => x.GetValue()).Returns("Kilroy");                
+
+            using (var cn = ConnectionMgr.GetTestConnection(sessionMock.Object))
             {
                 var batch = cn.NewBatch();
 
-                var query = batch.MsgSet.AppendCustomerAddRq();
+                var query = batch.MsgSet.AppendCustomerQueryRq();
+
+                bool customerFound = false;
 
                 batch.SetClosures(query, b =>
                     {
@@ -52,10 +103,12 @@ namespace ZombieTest
                         foreach(var customer in customers)
                         {
                             Console.WriteLine(Safe.Value(customer.Name));
+                            customerFound = true;
                         }
                     }, null, true);
 
-                Assert.AreEqual(true, batch.Run());
+                Assert.Equal(true, batch.Run());
+                Assert.True(customerFound);
             }
         }
     }
